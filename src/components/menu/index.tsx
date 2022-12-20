@@ -1,11 +1,10 @@
 import React from 'react'
-import { Router } from 'react-router-dom'
-import WrapRoute from '../../router'
-
-export default function Menu() {
-  return (
-    <Router>
-        <WrapRoute />
-    </Router>
-  )
+import Router from '../../router'
+import { BrowserRouter } from 'react-router-dom';
+export default function Routers() {
+    return (
+        <BrowserRouter>
+            <Router></Router>
+        </BrowserRouter>
+    )
 }

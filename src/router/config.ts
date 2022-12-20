@@ -1,16 +1,62 @@
-import { RouteObject } from "react-router-dom"
-import Discover from "../pages/discover";
-import Mine from "../pages/mine";
-
-const routeConfig:RouteObject[] = [
+import { lazy } from 'react'
+const Discover = lazy(() => import('../pages/discover'))
+const Mine = lazy(() => import('../pages/mine'))
+const NotFound = lazy(() => import('../pages/NotFound'))
+export default [
     {
-        path: "/discover",
-        element: <Discover />
+        path: '/',
+        meta: {
+            title: '发现音乐',
+            isLogin: true
+        },
+        component: Discover
     },
     {
         path: '/mine',
-        element: <Mine />
+        meta: {
+            title: '我的'
+        },
+        component: Mine
+    },
+    // {
+    //     path: '/demo',
+    //     component: lazy(() => import('@/pages/demo')),
+    //     children: [
+    //         {
+    //             path: '',
+    //             redirect: '/demo/route-demo',
+    //         },
+    //         {
+    //             path: '/demo/route-demo/*',
+    //             meta: {
+    //                 title: 'react-route',
+    //                 isLogin: true
+    //             },
+    //             component: RouteDemo,
+    //         },
+    //         {
+    //             path: '/demo/redux-demo',
+    //             meta: {
+    //                 title: 'react-redux',
+    //                 isLogin: true
+    //             },
+    //             component: ReduxDemo
+    //         },
+    //         {
+    //             path: '/demo/context-demo',
+    //             meta: {
+    //                 title: 'react-context',
+    //                 isLogin: true
+    //             },
+    //             component: ContextDemo
+    //         }
+    //     ]
+    // },
+    {
+        path: '*',
+        meta: {
+            title: '404'
+        },
+        component: NotFound
     }
 ]
-
-export default routeConfig;
