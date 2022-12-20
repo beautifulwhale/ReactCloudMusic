@@ -1,18 +1,13 @@
 import React from "react";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
-
+import { Layout, theme } from "antd";
+import Menu from "./components/menu";
 const { Header, Content, Footer } = Layout;
 
 const App: React.FC = () => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-
   return (
     <Layout className="layout">
       <Header>
-        <div className="logo" />
-        <Menu
+        {/* <Menu
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={["2"]}
@@ -23,20 +18,11 @@ const App: React.FC = () => {
               label: `nav ${key}`,
             };
           })}
-        />
+        /> */}
+        <Menu />
       </Header>
-      <Content style={{ padding: "0 50px" }}>
-        <Breadcrumb style={{ margin: "16px 0" }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
-        <div
-          className="site-layout-content"
-          style={{ background: colorBgContainer }}
-        >
-          Content
-        </div>
+      <Content style={{ padding: "20px 50px" }}>
+        <h1>App</h1>
       </Content>
       <Footer style={{ textAlign: "center" }}>
         Ant Design ©2018 Created by Ant UED
