@@ -4,7 +4,10 @@ import App from './App'
 import 'normalize.css';
 import '@/assets/css/reset.css'
 import "./router/index";
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <App />
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
 )
