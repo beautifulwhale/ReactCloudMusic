@@ -11,8 +11,8 @@ const App: React.FC = () => {
         <Header>
           <Menus />
         </Header>
-        <Content style={{ padding: "20px 50px" }}>
-                <RouterELement/> 
+        <Content>
+          <RouterELement />
         </Content>
         <Footer style={{ textAlign: "center" }}>
           Ant Design ©2018 Created by Ant UED

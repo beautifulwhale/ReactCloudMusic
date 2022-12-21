@@ -1,0 +1,17 @@
+.ant-layout-header {
+  padding-inline: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #242424 !important;
+}
+
+.ant-menu-dark {
+  background: #242424;
+}
+.ant-menu-item {
+  font-size: 14px;
+}
+.ant-menu-item-selected {
+  color: white !important;
+}
