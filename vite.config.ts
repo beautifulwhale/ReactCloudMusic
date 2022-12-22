@@ -9,5 +9,16 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src')
     }
+  },
+  css: {
+    modules: {
+      generateScopedName: '[name]__[local]__[hash:base64:5]',
+      hashPrefix: 'prefix'
+    },
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true
+      }
+    }
   }
 })
