@@ -1,9 +1,13 @@
 import { Menu, MenuProps } from 'antd';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import logo from '../../assets/image/sprite_01.png';
 export default function Menus() {
   const menuItem: MenuProps['items'] = [
+    {
+      label: <img style={{ width: '176px', height: '69px',backgroundPosition: '0'}} src={logo}/>,
+      key:''
+    },
     {
       label: '发现音乐',
       key: 'discover'
