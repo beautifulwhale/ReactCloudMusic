@@ -2,8 +2,8 @@ import { Menu, MenuProps } from 'antd'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames/bind'
-// import './index.less'
 import styles from './index.module.less'
+import Search from '../search'
 export default function Menus() {
   let cx = classNames.bind(styles);
   const logoClass = cx({
@@ -44,13 +44,19 @@ export default function Menus() {
     {
       label: '下载客户端',
       key: 'download'
+    },
+    {
+      label: <Search />,
+      key: 'search'
     }
   ]
   const [current, setCurrent] = useState('discover')
   const navigate = useNavigate()
   const handleClickMenu: MenuProps['onClick'] = (e) => {
-    navigate(`/${e.key}`)
     setCurrent(e.key)
+    if (e.key !== 'search') {
+      navigate(`/${e.key}`)
+    }
   }
   return (
     <Menu
