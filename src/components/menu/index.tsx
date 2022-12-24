@@ -4,11 +4,12 @@ import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames/bind'
 import styles from './index.module.less'
 import Search from '../search'
+import Login from '../login'
 export default function Menus() {
-  let cx = classNames.bind(styles);
+  let cx = classNames.bind(styles)
   const logoClass = cx({
     logo: true,
-    'sprite_01': true
+    sprite_01: true
   })
   const menuItem: MenuProps['items'] = [
     {
@@ -49,12 +50,18 @@ export default function Menus() {
       label: <Search />,
       key: 'search'
     },
+    {
+      label: <Login />,
+      key: 'login'
+    }
   ]
   const [current, setCurrent] = useState('discover')
   const navigate = useNavigate()
   const handleClickMenu: MenuProps['onClick'] = (e) => {
     setCurrent(e.key)
-    if (e.key !== 'search') {
+    if (e.key === 'search' || e.key === 'login') {
+      return false
+    } else {
       navigate(`/${e.key}`)
     }
   }

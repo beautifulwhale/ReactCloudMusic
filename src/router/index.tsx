@@ -1,8 +1,12 @@
 import path from 'path'
+import { lazy } from 'react'
 import { useRoutes, RouteObject } from 'react-router-dom'
-import Discover from '../pages/discover'
-import Mine from '../pages/mine'
-import Login from '../components/login'
+const Discover = lazy(() => import('../pages/discover/index'))
+const Mine = lazy(() => import('../pages/mine/index'))
+const Attention = lazy(() => import('../pages/attention/index'))
+const Musician = lazy(() => import('../pages/musician/index'))
+const Download = lazy(() => import('../pages/download/index'))
+const Shopping = lazy(() => import('../pages/shopping/index'))
 const routes: RouteObject[] = [
   {
     path: '/',
@@ -19,8 +23,20 @@ const routes: RouteObject[] = [
     element: <Mine />
   },
   {
-    path: '/login',
-    element: <Login />
+    path: '/attention',
+    element: <Attention />
+  },
+  {
+    path: '/musician',
+    element: <Musician />
+  },
+  {
+    path: '/download',
+    element: <Download />
+  },
+  {
+    path: '/shopping',
+    element: <Shopping />
   }
 ]
 export default function RouterELement() {

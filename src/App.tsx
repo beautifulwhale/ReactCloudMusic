@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import RouterELement from '../src/router/index';
 import { Layout } from "antd";
 import Menus from "./components/menu";
@@ -12,7 +12,9 @@ const App: React.FC = () => {
           <Menus />
         </Header>
         <Content>
-          <RouterELement />
+          <Suspense fallback={<div>Loading...</div>}>
+            <RouterELement />
+          </Suspense>
         </Content>
         <Footer style={{ textAlign: "center" }}>
           Ant Design ©2018 Created by Ant UED
