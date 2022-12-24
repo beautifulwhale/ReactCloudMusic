@@ -48,7 +48,7 @@ export default function Menus() {
     {
       label: <Search />,
       key: 'search'
-    }
+    },
   ]
   const [current, setCurrent] = useState('discover')
   const navigate = useNavigate()
