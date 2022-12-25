@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:development": "vite --mode development",
+    "dev:production": "vite --mode production"
   },
   "dependencies": {
     "@types/node": "^18.11.17",

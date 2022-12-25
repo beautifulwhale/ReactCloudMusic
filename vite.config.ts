@@ -1,24 +1,38 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path';
+import path from 'path'
+
+// const baseUrl = import.meta.env.VITE_MODE === 'development' ? import.meta.env.VITE_BASEURL : ''
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
-    }
-  },
-  css: {
-    modules: {
-      generateScopedName: '[name]__[local]__[hash:base64:5]',
-      hashPrefix: 'prefix'
+export default ({ mode }) =>
+  defineConfig({
+    plugins: [react()],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src')
+      }
     },
-    preprocessorOptions: {
-      less: {
-        javascriptEnabled: true
+    css: {
+      modules: {
+        generateScopedName: '[name]__[local]__[hash:base64:5]',
+        hashPrefix: 'prefix'
+      },
+      preprocessorOptions: {
+        less: {
+          javascriptEnabled: true
+        }
+      }
+    },
+    server: {
+      port: 7789,
+      open: true,
+      proxy: {
+        '/api': {
+          target: loadEnv(mode, process.cwd()).VITE_BASEURL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '')
+        }
       }
     }
-  }
-})
+  })
