@@ -1,15 +1,11 @@
 import axios from 'axios'
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 
-const baseUrl =
-  import.meta.env.VITE_MODE === 'development' ? import.meta.env.VITE_BASEURL : ''
 
 class myRequest {
   instance: AxiosInstance
-  baseConfig: AxiosRequestConfig = { baseURL: baseUrl, timeout: 5000 }
+  baseConfig: AxiosRequestConfig = { baseURL: '/api', timeout: 5000 }
   constructor(config: AxiosRequestConfig) {
-    console.log('baseUrl', baseUrl)
-
     this.instance = axios.create(Object.assign(this.baseConfig, config))
 
     this.instance.interceptors.request.use(

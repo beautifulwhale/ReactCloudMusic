@@ -2,7 +2,6 @@ import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
-// const baseUrl = import.meta.env.VITE_MODE === 'development' ? import.meta.env.VITE_BASEURL : ''
 
 // https://vitejs.dev/config/
 export default ({ mode }) =>
