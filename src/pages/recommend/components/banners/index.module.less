@@ -1,0 +1,57 @@
+
+.container {
+  width: 100%;
+  height: 270px;
+  .banners {
+    width: 982px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    .ban-img {
+      width: 730px;
+      .banner-item {
+        overflow: hidden;
+        .img {
+          width: 100%;
+        }
+      }
+    }
+    .ban-pr {
+      width: 254px;
+      height: 100%;
+      background-image: url('../../../../assets/img/download.png');
+      cursor: pointer;
+    }
+    .ban-control {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+
+      .btn {
+        position: absolute;
+        width: 37px;
+        height: 63px;
+        background-image: url('../../../../assets/img/banner_sprite.png');
+        background-color: transparent;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, .1);
+        }
+      }
+
+      .left {
+        left: -68px;
+        background-position: 0 -360px;
+      }
+
+      .right {
+        right: -68px;
+        background-position: 0 -508px;
+      }
+    }
+  }
+}
+
