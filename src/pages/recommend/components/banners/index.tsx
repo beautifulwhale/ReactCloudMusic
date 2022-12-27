@@ -17,6 +17,10 @@ export default function Banners() {
     btn: true,
     right: true
   })
+  const carouselClass = cx({
+    'slick-active': true,
+    'slick-dots li button': true
+  })
   const dispatch = useTypedDispatch()
   const [currentIndex, setCurrentIndex] = useState(0)
   const { bannerList } = useSelector(
@@ -57,10 +61,10 @@ export default function Banners() {
         </div>
         <div className={styles['ban-pr']}></div>
       </div>
-      <div className={styles['ban-control']}>
+      {/* <div className={styles['ban-control']}>
         <button className={leftClass}></button>
         <button className={rightClass}></button>
-      </div>
+      </div> */}
     </div>
   )
 }
