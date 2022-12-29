@@ -11,6 +11,7 @@
     "dev:production": "vite --mode production"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.8.0",
     "@types/node": "^18.11.17",
     "antd": "^5.0.7",
     "axios": "^1.2.1",

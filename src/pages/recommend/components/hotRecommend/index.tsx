@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { shallowEqual, useSelector } from 'react-redux'
 import HeaderTitle from '../../../../components/header-title'
-
+import { ReduxState, useTypedDispatch } from '../../../../model/store'
+import { getHotRecommendList } from '../../store/actions'
+import PlayList from '../../../../components/playlist'
+import { Playlist } from '../../../../model/recommend'
+import styles from './index.module.less'
 export default function HotRecommend() {
   const menus = [
     {
@@ -24,9 +29,24 @@ export default function HotRecommend() {
       id: '5'
     }
   ]
+  const { recommendPlayList } = useSelector(
+    (state: ReduxState) => ({
+      recommendPlayList: state.recommend.recommendPlayList
+    }),
+    shallowEqual
+  )
+  const dispatch = useTypedDispatch()
+  useEffect(() => {
+    dispatch(getHotRecommendList())
+  }, [dispatch])
   return (
     <>
       <HeaderTitle title="热门推荐" menus={menus} />
+      <div className={styles.playlistContent}>
+        {recommendPlayList.map((item: Playlist) => {
+          return <PlayList playlist={item} />
+        })}
+      </div>
     </>
   )
 }
