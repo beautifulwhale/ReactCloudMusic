@@ -8,3 +8,7 @@ export function getCount(count:number) {
     return Math.floor(count / 10000000) / 10 + "亿";
   }
 }
+
+export function getSizeImage(imgUrl:string, size:number) {
+  return `${imgUrl}?param=${size}x${size}`;
+}

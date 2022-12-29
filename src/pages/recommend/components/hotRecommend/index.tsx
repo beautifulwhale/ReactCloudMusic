@@ -44,7 +44,7 @@ export default function HotRecommend() {
       <HeaderTitle title="热门推荐" menus={menus} />
       <div className={styles.playlistContent}>
         {recommendPlayList.map((item: Playlist) => {
-          return <PlayList playlist={item} />
+          return <PlayList key={item.id} playlist={item} />
         })}
       </div>
     </>

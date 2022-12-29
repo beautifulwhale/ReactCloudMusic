@@ -2,7 +2,7 @@ import React from 'react'
 import { PlayCircleOutlined, CustomerServiceOutlined } from '@ant-design/icons'
 import { Playlist } from '../../model/recommend'
 import styles from './index.module.less'
-import { getCount } from '../../utils/format'
+import { getCount, getSizeImage } from '../../utils/format'
 import classNames from 'classnames/bind'
 type FcProps = {
   children?: unknown
@@ -11,16 +11,16 @@ type FcProps = {
 export default function PlayList(props: FcProps) {
   const { playlist } = props
   const cx = classNames.bind(styles)
-  // const imgContentClass = cx({
-  //   'imgContent':true,
-  //   'sprite_covor':true
-  // })
+  const mskClass = cx({
+    msk: true,
+    sprite_covor: true
+  })
   return (
     <>
       <div className={styles.playlist}>
         <div className={styles.imgContent}>
-          <img src={playlist.picUrl} />
-          <a href={`/playlist?${playlist.id}`} className={styles.msk}></a>
+          <img src={getSizeImage(playlist.picUrl, 140)} />
+          <a href={`/playlist?${playlist.id}`} className={mskClass}></a>
           <div className={styles.mask}>
             <span>
               <i style={{ marginRight: 3 }}>
@@ -34,9 +34,7 @@ export default function PlayList(props: FcProps) {
           </div>
         </div>
         <div className={styles.name}>
-          <a>
-            {playlist.name}
-          </a>
+          <a>{playlist.name}</a>
         </div>
       </div>
     </>
