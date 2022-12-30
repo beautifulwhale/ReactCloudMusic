@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { shallowEqual, useSelector } from 'react-redux'
 import { Carousel } from 'antd'
 import { getBannerListAction } from '../../store/actions'
@@ -17,10 +17,7 @@ export default function Banners() {
     btn: true,
     right: true
   })
-  const carouselClass = cx({
-    'slick-active': true,
-    'slick-dots li button': true
-  })
+  const carouselRef: any = useRef(null)
   const dispatch = useTypedDispatch()
   const [currentIndex, setCurrentIndex] = useState(0)
   const { bannerList } = useSelector(
@@ -49,7 +46,12 @@ export default function Banners() {
     >
       <div className={styles.banners}>
         <div className={styles['ban-img']}>
-          <Carousel effect="fade" autoplay beforeChange={bannerChange}>
+          <Carousel
+            ref={carouselRef}
+            effect="fade"
+            autoplay
+            beforeChange={bannerChange}
+          >
             {bannerList.map((item: Banner) => {
               return (
                 <div className={styles['banner-item']} key={item.targetId}>
@@ -60,11 +62,17 @@ export default function Banners() {
           </Carousel>
         </div>
         <div className={styles['ban-pr']}></div>
+        <div className={styles['ban-control']}>
+          <button
+            className={leftClass}
+            onClick={() => carouselRef.current.prev()}
+          ></button>
+          <button
+            className={rightClass}
+            onClick={() => carouselRef.current.next()}
+          ></button>
+        </div>
       </div>
-      {/* <div className={styles['ban-control']}>
-        <button className={leftClass}></button>
-        <button className={rightClass}></button>
-      </div> */}
     </div>
   )
 }
