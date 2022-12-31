@@ -3,9 +3,11 @@ import bannerList from '../../../services/banner'
 import hotRecommend from '../../../services/recommend'
 import { Banner } from './../../../model/banner'
 import { AppDispatch } from '../../../model/store'
-import { Playlist } from '../../../model/recommend'
+import { PlayList } from '../../../model/playlist'
 import newAlbumList from '../../../services/newalbum'
 import { Album } from '../../../model/newalbum'
+import hotTopList from '../../../services/hotTopList'
+import { Playlist } from '../../../model/recommend'
 
 // banner
 function changeBannerList(banners: Banner[]) {
@@ -50,6 +52,26 @@ export function getNewAlbumList() {
     const { code, albums } = await newAlbumList()
     if (code === 200) {
       dispatch(changeNewAlbum(albums))
+    }
+  }
+}
+
+// 推荐页榜单
+function changeHotTopList(hotTopList: PlayList[]) {
+  return {
+    type: Types.CHANGE_HOTTOPLIST,
+    hotTopList
+  }
+}
+let allHotTopList: PlayList[] = []
+export function getHotTopList(id: number) {
+  return async (dispatch: AppDispatch) => {
+    const { code, playlist } = await hotTopList(id)
+    if (code === 200) {
+      allHotTopList.push(playlist)
+    }
+    if (allHotTopList.length === 3) {
+      dispatch(changeHotTopList(allHotTopList))
     }
   }
 }

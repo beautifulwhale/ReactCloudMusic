@@ -20,7 +20,7 @@ export default function PlayList(props: FcProps) {
       <div className={styles.playlist}>
         <div className={styles.imgContent}>
           <img src={getSizeImage(playlist.picUrl, 140)} />
-          <a href={`/playlist?${playlist.id}`} className={mskClass}></a>
+          <a href={`/playlist?id=${playlist.id}`} className={mskClass}></a>
           <div className={styles.mask}>
             <span>
               <i style={{ marginRight: 3 }}>

@@ -3,7 +3,8 @@ import * as Types from './constant'
 const initState = {
   bannerList: [],
   recommendPlayList: [],
-  newAlbumList: []
+  newAlbumList: [],
+  hotTopList: []
 }
 function reducer(state = initState, action: any) {
   switch (action.type) {
@@ -13,6 +14,8 @@ function reducer(state = initState, action: any) {
       return { ...state, recommendPlayList: action.recommendPlayList }
     case Types.CHANGE_NEWALBUM:
       return { ...state, newAlbumList: action.newAlbumList }
+    case Types.CHANGE_HOTTOPLIST:
+      return { ...state, hotTopList: action.hotTopList }
     default:
       return { ...state }
   }

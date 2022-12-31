@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { Carousel } from 'antd'
-import { useSelector } from 'react-redux'
+import { shallowEqual, useSelector } from 'react-redux'
 import HeaderTitle from '../../../../components/header-title'
 import { useTypedDispatch } from '../../../../model/store'
 import { ReduxState } from '../../../../store'
@@ -33,9 +33,12 @@ export default function NewAlbum() {
     sprite_02: true
   })
   const carouselRef: any = useRef(null)
-  const { newAlbumList } = useSelector((state: ReduxState) => ({
-    newAlbumList: state.recommend.newAlbumList
-  }))
+  const { newAlbumList } = useSelector(
+    (state: ReduxState) => ({
+      newAlbumList: state.recommend.newAlbumList
+    }),
+    shallowEqual
+  )
   const dispatch = useTypedDispatch()
   useEffect(() => {
     dispatch(getNewAlbumList())
