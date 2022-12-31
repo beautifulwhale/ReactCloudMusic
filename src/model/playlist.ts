@@ -5,6 +5,7 @@ export interface PlayList {
   createTime: number
   tags: string[]
   creator: Creator
+  tracks:Tracks[]
 }
 // 歌单创造者
 export interface Creator {

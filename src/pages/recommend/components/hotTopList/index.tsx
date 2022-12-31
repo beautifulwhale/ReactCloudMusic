@@ -1,8 +1,13 @@
 import React, { useEffect } from 'react'
 import { shallowEqual, useSelector } from 'react-redux'
+
 import { ReduxState, useTypedDispatch } from '../../../../model/store'
 import { getHotTopList } from '../../store/actions'
 import HeaderTitle from '../../../../components/header-title'
+import styles from './index.module.less'
+import { PlayList } from '../../../../model/playlist'
+import HotTopListItem from './cpns/hotTopListItem'
+
 export default function HotTopList() {
   const { hotTopList } = useSelector(
     (state: ReduxState) => ({
@@ -19,9 +24,13 @@ export default function HotTopList() {
 
   return (
     <>
-      <div>
-        <HeaderTitle title='榜单'/>
-
+      <div className={styles.hotlist}>
+        <HeaderTitle title="榜单" />
+        <div className={styles.oneList}>
+          {hotTopList.map((item: PlayList) => {
+            return <HotTopListItem key={item.id} topListItem={item} />
+          })}
+        </div>
       </div>
     </>
   )

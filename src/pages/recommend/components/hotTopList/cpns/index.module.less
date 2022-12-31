@@ -1,0 +1,110 @@
+.top-list-item {
+  width: 100%;
+  height: 100%;
+  .top {
+    height: 120px;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-start;
+    .img-content {
+      width: 80px;
+      height: 80px;
+      position: relative;
+      img {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .msk {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-position: -145px -57px;
+      }
+    }
+    .title-ct {
+      width: 100px;
+      margin: 10px 0 0 10px;
+      a {
+        color: #000;
+        font-size: 14px;
+      }
+      .btn {
+        margin-top: 10px;
+        display: flex;
+        a {
+          display: block;
+          width: 22px;
+          height: 22px;
+          margin-right: 10px;
+          text-indent: -9999px;
+        }
+        .play {
+          background-position: -267px -205px;
+        }
+        .collect {
+          background-position: -300px -205px;
+        }
+      }
+    }
+  }
+  .song-ul {
+    height: 352px;
+    .song-li {
+      width: 100%;
+      padding: 0 0 0 20px;
+      height: 32px;
+      .number {
+        width: 35px;
+        height: 100%;
+        display: inline-block;
+        font-size: 16px;
+        color: #666;
+        line-height: 32px;
+        text-align: center;
+        float: left;
+      }
+      .name {
+        font-size: 12px;
+        color: #000;
+        line-height: 32px;
+        float: left;
+      }
+      .operate-btn {
+        float: right;
+        width: 80px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        .one-btn {
+          width: 17px;
+          height: 17px;
+          margin-right: 10px;
+          text-align: center;
+          cursor: pointer;
+        }
+        .play-icon {
+          background-position: -267px -268px;
+        }
+        .append-icon {
+          position: relative;
+          top: 2px;
+          background-position: 0 -700px;
+        }
+        .collect-icon {
+          background-position: -297px -268px;
+        }
+      }
+    }
+    .more {
+      height: 32px;
+      line-height: 32px;
+      margin-left: 160px;
+      a {
+        color: #000;
+      }
+    }
+  }
+}
