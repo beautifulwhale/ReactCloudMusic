@@ -1,0 +1,3 @@
+//  切换歌曲
+export const CHANGE_SONG_URL = 'CHANGE_SONG_URL'
+export const CHANGE_SONG_DETAIL = 'CHANGE_SONG_DETAIL'

@@ -1,9 +1,9 @@
-import React, { Suspense } from "react";
-import RouterELement from '../src/router/index';
-import { Layout } from "antd";
-import Menus from "./components/menu";
-const { Header, Content, Footer } = Layout;
-
+import React, { Suspense } from 'react'
+import RouterELement from '../src/router/index'
+import { Layout } from 'antd'
+import Menus from './components/menu'
+const { Header, Content, Footer } = Layout
+import Player from './components/player'
 const App: React.FC = () => {
   return (
     <>
@@ -16,12 +16,11 @@ const App: React.FC = () => {
             <RouterELement />
           </Suspense>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          
-        </Footer>
+        <Footer style={{ textAlign: 'center' }}></Footer>
+        <Player />
       </Layout>
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App
