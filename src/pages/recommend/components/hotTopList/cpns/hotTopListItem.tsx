@@ -1,7 +1,13 @@
-import classNames from 'classnames/bind'
 import React, { Fragment, useState } from 'react'
-import { PlayList } from '../../../../../model/playlist'
+import classNames from 'classnames/bind'
 import styles from './index.module.less'
+import { PlayList, Tracks } from '../../../../../model/playlist'
+import { useTypedDispatch } from '../../../../../model/store'
+import {
+  appendMusicToListAction,
+  getSongDetail,
+  getSongUrl
+} from '../../../../../components/player/store/actions'
 
 type FcProps = {
   children?: unknown
@@ -11,6 +17,7 @@ export default function HotTopListItem({ topListItem }: FcProps) {
   const [isHover, setHover] = useState(false)
   const [currentIndex, setIndex] = useState(0)
   const cx = classNames.bind(styles)
+  const dispatch = useTypedDispatch()
   const mskClass = cx({
     msk: true,
     sprite_covor: true
@@ -45,6 +52,11 @@ export default function HotTopListItem({ topListItem }: FcProps) {
   const handleMouseLeave = (index: number) => {
     setHover(false)
     setIndex(index)
+  }
+  const playMusic = (song: Tracks) => {
+    dispatch(getSongUrl(song.id))
+    dispatch(getSongDetail(song.id))
+    dispatch(appendMusicToListAction(song))
   }
   return (
     <>
@@ -97,7 +109,12 @@ export default function HotTopListItem({ topListItem }: FcProps) {
                     }}
                     className={styles['operate-btn']}
                   >
-                    <span className={playIconClass}></span>
+                    <span
+                      className={playIconClass}
+                      onClick={() => {
+                        playMusic(item)
+                      }}
+                    ></span>
                     <span className={appendIconClass}></span>
                     <span className={collectIconClass}></span>
                   </span>

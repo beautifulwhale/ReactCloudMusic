@@ -20,10 +20,19 @@ export default function Player() {
   )
   const dispatch = useTypedDispatch()
   useEffect(() => {
-    dispatch(getSongDetail())
-    dispatch(getSongUrl())
+    dispatch(getSongDetail(1330348068))
+    dispatch(getSongUrl(1330348068))
   }, [dispatch])
-
+  useEffect(() => {
+    audioRef.current
+      .play()
+      .then(() => {
+        setPlay(true)
+      })
+      .catch(() => {
+        setPlay(false)
+      })
+  }, [songInfo])
   const singerName = (songInfo.ar && songInfo.ar[0].name) || '未知歌手'
   const durtion = formatDate(songInfo.dt, 'mm:ss')
   const currentShowTime = formatDate(currentPlayTime, 'mm:ss')
