@@ -1,4 +1,4 @@
-export function formatDate(time: number, fmt: string) {
+export function formatDate(time: number | string, fmt: string) {
   let date = new Date(time);
 
   if (/(y+)/.test(fmt)) {
@@ -20,6 +20,6 @@ export function formatDate(time: number, fmt: string) {
   return fmt;
 };
 
-function padLeftZero(str:string) {
+export function padLeftZero(str: string) {
   return ('00' + str).substring(str.length);
 };

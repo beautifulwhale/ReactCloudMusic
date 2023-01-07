@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind'
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { PlayList } from '../../../../../model/playlist'
 import styles from './index.module.less'
 
@@ -68,12 +68,11 @@ export default function HotTopListItem({ topListItem }: FcProps) {
             </div>
           </div>
         </div>
-        <ul className={styles['song-ul']}>
+        <div className={styles['song-ul']}>
           {topListItem.tracks.slice(0, 10).map((item, index) => {
             return (
-              <>
-                <li
-                  key={item.id}
+              <Fragment key={item.id}>
+                <div
                   className={styles['song-li']}
                   onMouseEnter={() => handleMouseEnter(index)}
                   onMouseLeave={() => handleMouseLeave(index)}
@@ -102,16 +101,16 @@ export default function HotTopListItem({ topListItem }: FcProps) {
                     <span className={appendIconClass}></span>
                     <span className={collectIconClass}></span>
                   </span>
-                </li>
+                </div>
                 {index === 9 && (
                   <div className={styles['more']}>
                     <a href={`/toplist?id=${item.id}`}>查看全部</a>
                   </div>
                 )}
-              </>
+              </Fragment>
             )
           })}
-        </ul>
+        </div>
       </div>
     </>
   )

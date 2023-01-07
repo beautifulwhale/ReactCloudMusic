@@ -1,18 +1,16 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Slider } from 'antd'
 import { shallowEqual, useSelector } from 'react-redux'
 import styles from './index.module.less'
 import { ReduxState, useTypedDispatch } from '../../model/store'
 import { getSongDetail, getSongUrl } from './store/actions'
 import { formatDate } from '../../utils/time'
+import { getSizeImage } from '../../utils/format'
 export default function Player() {
-  interface AudioRef {
-    play: () => void
-    pause: () => void
-  }
   const [isPlay, setPlay] = useState(false)
-  // const audioRef = useRef(null)
-  const audioRef = useRef() as MutableRefObject<AudioRef>
+  const [currentPlayTime, setPlayTime] = useState(0)
+  const [progressValue, setProgress] = useState(0)
+  const audioRef = useRef<any>(null)
   const { songInfo, songUrl } = useSelector(
     (state: ReduxState) => ({
       songInfo: state.player.songInfo,
@@ -27,17 +25,42 @@ export default function Player() {
   }, [dispatch])
 
   const singerName = (songInfo.ar && songInfo.ar[0].name) || '未知歌手'
+  const durtion = formatDate(songInfo.dt, 'mm:ss')
+  const currentShowTime = formatDate(currentPlayTime, 'mm:ss')
   const plyClass = isPlay
     ? { backgroundPosition: '0 -165px' }
     : { backgroundPosition: '0 -204px' }
   // 播放/暂停
-  const handlePlayer = () => {
+  const handlePlayer = useCallback(() => {
     isPlay ? audioRef.current.pause() : audioRef.current.play()
     setPlay(!isPlay)
-  }
+  }, [isPlay])
+  // 设置当时时间、进度条
   const handleTimeUpdate = (e: any) => {
-    console.log('e', e)
+    const currentTime = e.target.currentTime
+    setPlayTime(currentTime * 1000)
+    setProgress(((currentTime * 1000) / songInfo.dt) * 100)
   }
+  //改变进度条
+  const changePlayProgress = useCallback(
+    (value: number) => {
+      setPlayTime((value / 100) * songInfo.dt)
+      setProgress(value)
+    },
+    [songInfo]
+  )
+  // 改变进度条后
+  const afterChangePlay = useCallback(
+    (value: number) => {
+      const currentTime = ((value / 100) * songInfo.dt) / 1000
+      audioRef.current.currentTime = currentTime
+      setPlayTime(currentTime * 1000)
+      if (!isPlay) {
+        handlePlayer()
+      }
+    },
+    [songInfo, isPlay, handlePlayer]
+  )
 
   return (
     <>
@@ -62,7 +85,7 @@ export default function Player() {
             </div>
             <div className={styles['player-message']}>
               <div className={styles['img']}>
-                <img src={songInfo.al?.picUrl} />
+                <img src={getSizeImage(songInfo.al?.picUrl, 35)} />
               </div>
               <div className={styles['progress']}>
                 <div className={styles['music-info']}>
@@ -70,15 +93,20 @@ export default function Player() {
                   <a className={styles['artist']}>{singerName}</a>
                 </div>
                 <div className={styles['slide']}>
-                  <Slider className={styles['sliderClass']} defaultValue={30} />
+                  <Slider
+                    className={styles['sliderClass']}
+                    value={progressValue}
+                    onChange={changePlayProgress}
+                    onAfterChange={afterChangePlay}
+                  />
                 </div>
               </div>
               <div className={styles['time']}>
-                <span className={styles['current-time']}>02:30</span>
-                <span>/</span>
-                <span className={styles['duration']}>
-                  {formatDate(songInfo.dt, 'mm:ss')}
+                <span className={styles['current-time']}>
+                  {currentShowTime}
                 </span>
+                <span>/</span>
+                <span className={styles['duration']}>{durtion}</span>
               </div>
             </div>
             <div className={styles['player-operate']}>
