@@ -1,8 +1,12 @@
-import { CHANGE_SONG_URL, CHANGE_SONG_DETAIL, CHANGE_CURRENTINDEX, CHANGE_PLAYLIST } from './constant'
+import {
+  CHANGE_SONG_URL, CHANGE_SONG_DETAIL, CHANGE_CURRENTINDEX, CHANGE_PLAYLIST,
+  CHANGE_PLAYPATTERN
+} from './constant'
 import { songUrl, songDetail } from '../../../services/song'
 import { AppDispatch } from '../../../model/store'
 import { SongDetail } from '../../../model/song'
 import { Tracks } from '../../../model/playlist'
+import { getRandomNumber } from '../../../utils/random'
 
 // 歌曲基本信息
 function changeSongDetail(songInfo: SongDetail) {
@@ -69,5 +73,44 @@ export function appendMusicToListAction(song: Tracks) {
     } else {
       dispatch(changeCurrentIndex(currentSongIndex))
     }
+  }
+}
+
+// 改变播放模式
+export function changePlayPattern(playPattern: string) {
+  return {
+    type: CHANGE_PLAYPATTERN,
+    playPattern
+  }
+}
+
+// 改变上一首、下一首通过播放模式
+export function changeMusicPlayByPattern(type: number) {
+  return (dispatch: AppDispatch, getState: any) => {
+    const { playPattern, currentIndex, playlist } = getState().player
+    let currentSong = null
+    switch (playPattern) {
+      case 'sequence':
+        // 顺序播放
+        let newCurrentIndex = currentIndex
+        newCurrentIndex += type;
+        if (newCurrentIndex >= playlist.length) newCurrentIndex = 0;
+        if (newCurrentIndex < 0) newCurrentIndex = playlist.length - 1;
+        currentSong = playlist[newCurrentIndex]
+        dispatch(changeCurrentIndex(newCurrentIndex))
+        break;
+      case 'random':
+        // 随机播放
+        let randomIndex = getRandomNumber(playlist.length)
+        while (randomIndex === currentIndex) {
+          randomIndex = getRandomNumber(playlist.length);
+        }
+        currentSong = playlist[randomIndex]
+        dispatch(changeCurrentIndex(randomIndex))
+      default:
+        break;
+    }
+    dispatch(getSongUrl(currentSong.id))
+    dispatch(changeSongDetail(currentSong))
   }
 }

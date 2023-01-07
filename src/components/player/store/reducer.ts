@@ -1,4 +1,4 @@
-import { CHANGE_SONG_URL, CHANGE_SONG_DETAIL, CHANGE_CURRENTINDEX, CHANGE_PLAYLIST } from './constant'
+import { CHANGE_SONG_URL, CHANGE_SONG_DETAIL, CHANGE_CURRENTINDEX, CHANGE_PLAYLIST, CHANGE_PLAYPATTERN } from './constant'
 
 const initState = {
   songUrl: "",
@@ -99,20 +99,21 @@ const initState = {
       "mv": 10782615,
       "publishTime": 1543766400000
     }
-  ]
+  ],
+  playPattern: 'sequence'
 }
 export default function reducer(state = initState, actions: any) {
   switch (actions.type) {
     case CHANGE_SONG_DETAIL:
       return { ...state, songInfo: actions.songInfo }
     case CHANGE_SONG_URL:
-      console.log('url is', actions.songUrl);
-
       return { ...state, songUrl: actions.songUrl }
     case CHANGE_CURRENTINDEX:
       return { ...state, currentIndex: actions.currentIndex }
     case CHANGE_PLAYLIST:
       return { ...state, playlist: actions.playlist }
+    case CHANGE_PLAYPATTERN:
+      return { ...state, playPattern: actions.playPattern }
     default:
       return { ...state }
   }
