@@ -1,12 +1,18 @@
 import {
-  CHANGE_SONG_URL, CHANGE_SONG_DETAIL, CHANGE_CURRENTINDEX, CHANGE_PLAYLIST,
-  CHANGE_PLAYPATTERN
+  CHANGE_SONG_URL, CHANGE_SONG_DETAIL,
+  CHANGE_CURRENTINDEX, CHANGE_PLAYLIST,
+  CHANGE_PLAYPATTERN,
+  CHANGE_LYRICLIST,
+  CHANGE_CURRENTLYRIC
 } from './constant'
 import { songUrl, songDetail } from '../../../services/song'
 import { AppDispatch } from '../../../model/store'
 import { SongDetail } from '../../../model/song'
 import { Tracks } from '../../../model/playlist'
 import { getRandomNumber } from '../../../utils/random'
+import songLyric from '../../../services/lyric'
+import { parseLyric } from '../../../utils/parseLyric'
+import { LyricList } from '../../../model/lyric'
 
 // 歌曲基本信息
 function changeSongDetail(songInfo: SongDetail) {
@@ -70,8 +76,10 @@ export function appendMusicToListAction(song: Tracks) {
       newPlaylist.push(song)
       dispatch(changePlaylist(newPlaylist))
       dispatch(changeCurrentIndex(newPlaylist.length - 1))
+      dispatch(getLyric(song.id))
     } else {
       dispatch(changeCurrentIndex(currentSongIndex))
+      dispatch(getLyric(song.id))
     }
   }
 }
@@ -112,5 +120,31 @@ export function changeMusicPlayByPattern(type: number) {
     }
     dispatch(getSongUrl(currentSong.id))
     dispatch(changeSongDetail(currentSong))
+  }
+}
+
+// 改变歌词
+function changeSongLyric(lyricList: LyricList[]) {
+  return {
+    type: CHANGE_LYRICLIST,
+    lyricList
+  }
+}
+export function getLyric(id: number) {
+  return async (dispatch: AppDispatch) => {
+    const { code, lrc } = await songLyric(id)
+    if (code === 200) {
+      // 改变歌词格式
+      const lyricList = parseLyric(lrc?.lyric)
+      dispatch(changeSongLyric(lyricList))
+    }
+  }
+}
+
+// 改变当前播放歌词
+export function changeCurrentLyric(currentLyricIndex: number) {
+  return {
+    type: CHANGE_CURRENTLYRIC,
+    currentLyricIndex
   }
 }

@@ -1,4 +1,10 @@
-import { CHANGE_SONG_URL, CHANGE_SONG_DETAIL, CHANGE_CURRENTINDEX, CHANGE_PLAYLIST, CHANGE_PLAYPATTERN } from './constant'
+import {
+  CHANGE_SONG_URL,
+  CHANGE_SONG_DETAIL, CHANGE_CURRENTINDEX,
+  CHANGE_PLAYLIST, CHANGE_PLAYPATTERN,
+  CHANGE_LYRICLIST,
+  CHANGE_CURRENTLYRIC
+} from './constant'
 
 const initState = {
   songUrl: "",
@@ -100,7 +106,9 @@ const initState = {
       "publishTime": 1543766400000
     }
   ],
-  playPattern: 'sequence'
+  playPattern: 'sequence',
+  lyricList: [],
+  currentLyricIndex: 0
 }
 export default function reducer(state = initState, actions: any) {
   switch (actions.type) {
@@ -114,6 +122,10 @@ export default function reducer(state = initState, actions: any) {
       return { ...state, playlist: actions.playlist }
     case CHANGE_PLAYPATTERN:
       return { ...state, playPattern: actions.playPattern }
+    case CHANGE_LYRICLIST:
+      return { ...state, lyricList: actions.lyricList }
+    case CHANGE_CURRENTLYRIC:
+      return { ...state, currentLyricIndex: actions.currentLyricIndex }
     default:
       return { ...state }
   }

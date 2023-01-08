@@ -7,7 +7,9 @@ import {
   getSongDetail,
   getSongUrl,
   changePlayPattern,
-  changeMusicPlayByPattern
+  changeMusicPlayByPattern,
+  getLyric,
+  changeCurrentLyric
 } from './store/actions'
 import { formatDate } from '../../utils/time'
 import { getSizeImage } from '../../utils/format'
@@ -25,10 +27,12 @@ export default function Player() {
     backgroundPosition: ' -3px -344px'
   })
   const audioRef = useRef<any>(null)
-  const { songInfo, songUrl } = useSelector(
+  const { songInfo, songUrl, lyricList, currentLyricIndex } = useSelector(
     (state: ReduxState) => ({
       songInfo: state.player.songInfo,
-      songUrl: state.player.songUrl
+      songUrl: state.player.songUrl,
+      lyricList: state.player.lyricList,
+      currentLyricIndex: state.player.currentLyricIndex
     }),
     shallowEqual
   )
@@ -37,6 +41,7 @@ export default function Player() {
   useEffect(() => {
     dispatch(getSongDetail(1330348068))
     dispatch(getSongUrl(1330348068))
+    dispatch(getLyric(1330348068))
   }, [dispatch])
 
   useEffect(() => {
@@ -67,6 +72,18 @@ export default function Player() {
     const currentTime = e.target.currentTime
     setPlayTime(currentTime * 1000)
     setProgress(((currentTime * 1000) / songInfo?.dt) * 100)
+
+    // 匹配当前歌词
+    let lyricIndex = 0
+    for (let i = 0; i < lyricList.length; i++) {
+      if (currentTime * 1000 < lyricList[i].time) {
+        lyricIndex = i - 1
+        break
+      }
+    }
+    if (currentLyricIndex !== lyricIndex) {
+      dispatch(changeCurrentLyric(lyricIndex))
+    }
   }
   //改变进度条
   const changePlayProgress = useCallback(
@@ -136,14 +153,14 @@ export default function Player() {
           <div className={styles['player-wrap']}>
             <div className={styles['player-btn']}>
               <a
-                href="#"
+                href="#!"
                 className={styles.prv}
                 onClick={() => changeMusic(-1)}
               >
                 上一曲
               </a>
               <a
-                href="#"
+                href="#!"
                 className={styles.ply}
                 style={plyClass}
                 onClick={() => handlePlayer()}
@@ -151,7 +168,7 @@ export default function Player() {
                 播放/暂停
               </a>
               <a
-                href="#"
+                href="#!"
                 className={styles.next}
                 onClick={() => changeMusic(1)}
               >
@@ -186,28 +203,28 @@ export default function Player() {
             </div>
             <div className={styles['player-operate']}>
               <div className={styles['fl-btns']}>
-                <a href="#" className={styles['icn-pip']}>
+                <a href="#!" className={styles['icn-pip']}>
                   画中画
                 </a>
-                <a href="#" className={styles['icn-add']}>
+                <a href="#!" className={styles['icn-add']}>
                   收藏
                 </a>
-                <a href="#" className={styles['icn-share']}>
+                <a href="#!" className={styles['icn-share']}>
                   分享
                 </a>
               </div>
               <div className={styles['fpr-btns']}>
-                <a href="#" className={styles['icn-vol']}>
+                <a href="#!" className={styles['icn-vol']}>
                   声音
                 </a>
                 <a
-                  href="#"
+                  href="#!"
                   style={playIconClass}
                   onClick={() => changePlayMode()}
                 >
                   播放模式
                 </a>
-                <a href="#" className={styles['icn-list']}>
+                <a href="#!" className={styles['icn-list']}>
                   播放列表
                 </a>
               </div>
