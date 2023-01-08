@@ -3,6 +3,7 @@ import { Slider } from 'antd'
 import { shallowEqual, useSelector } from 'react-redux'
 import styles from './index.module.less'
 import { ReduxState, useTypedDispatch } from '../../model/store'
+import PlayListMenu from './component/playListMenu'
 import {
   getSongDetail,
   getSongUrl,
@@ -23,6 +24,7 @@ export default function Player() {
   const [currentPlayTime, setPlayTime] = useState(0)
   const [progressValue, setProgress] = useState(0)
   const [currentMode, setPlayMode] = useState(PlayPattern.sequence)
+  const [isShowMenu, setShowMenu] = useState(false)
   const [playIconClass, setPlayIconClass] = useState({
     backgroundPosition: ' -3px -344px'
   })
@@ -146,6 +148,11 @@ export default function Player() {
       audioRef.current.play()
     }
   }
+
+  //是否展示菜单
+  const handleShowMenu = () => {
+    setShowMenu(!isShowMenu)
+  }
   return (
     <>
       <div className={styles['player-content']}>
@@ -224,7 +231,11 @@ export default function Player() {
                 >
                   播放模式
                 </a>
-                <a href="#!" className={styles['icn-list']}>
+                <a
+                  href="#!"
+                  className={styles['icn-list']}
+                  onClick={() => handleShowMenu()}
+                >
                   播放列表
                 </a>
               </div>
@@ -238,6 +249,7 @@ export default function Player() {
         onTimeUpdate={(e) => handleTimeUpdate(e)}
         onEnded={() => handleMusicEnd()}
       ></audio>
+      {isShowMenu ? <PlayListMenu /> : null}
     </>
   )
 }
